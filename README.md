@@ -105,8 +105,3 @@ Script tersebut mengirim data uji ke backend sehingga dashboard dapat diperiksa 
 ## Batasan Sistem
 
 Proyek ini merupakan **prototipe pembelajaran dan demonstrasi IoT**, bukan sistem kendali keselamatan perlintasan kereta api sungguhan. Dashboard web berfungsi untuk memantau data dan tidak menyediakan tombol untuk mengendalikan palang. Keakuratan penghitungan perjalanan dan gerbong bergantung pada data serta transisi status yang dikirimkan oleh perangkat IoT. Sistem ini tidak ditujukan untuk menggantikan perangkat keselamatan dan prosedur operasional perkeretaapian.
-
----
-
-**SMART RAILWAY LEVEL-CROSSING COUNTDOWN BARRIER**  
-Kelompok **HaloCake** · 2026
