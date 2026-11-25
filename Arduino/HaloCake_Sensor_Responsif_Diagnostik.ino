@@ -3,8 +3,8 @@
 #include <PubSubClient.h>
 #include <ESP32Servo.h>
 
-const char* WIFI_SSID     = "cihuy";
-const char* WIFI_PASSWORD = "123456789";
+const char* WIFI_SSID     = "nama wifi";
+const char* WIFI_PASSWORD = "password";
 const char* MQTT_HOST     = "broker.hivemq.com";
 const uint16_t MQTT_PORT  = 1883;
 
