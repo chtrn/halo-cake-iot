@@ -7,7 +7,7 @@ const char* WIFI_SSID     = "cihuy";
 const char* WIFI_PASSWORD = "123456789";
 const char* MQTT_HOST     = "broker.hivemq.com";
 const uint16_t MQTT_PORT  = 1883;
-// Topik yang sama persis harus dipakai di node MQTT-in Node-RED.
+
 const char* MQTT_TOPIC    = "halocake/demo-7d82/esp32-01/status";
 const unsigned long WIFI_RETRY_MS = 10000;
 const unsigned long MQTT_RETRY_MS = 8000;
@@ -22,11 +22,6 @@ const unsigned long HEARTBEAT_MS  = 10000;
 #define LED_MERAH   27
 
 // ========== 7-SEGMENT CUSTOM (COMMON CATHODE) ==========
-// Pin yang sebelumnya bentrok sudah DIPINDAH:
-// B tetap GPIO 18 (buzzer sekarang GPIO 16).
-// C pindah dari GPIO 12 ke GPIO 27 (GPIO 12 untuk LED merah).
-// E pindah dari GPIO 2 ke GPIO 32 (GPIO 2 untuk sensor A).
-// Common kanan tetap GPIO 19, Common kiri tetap GPIO 26.
 #define SEG_A 5
 #define SEG_B 18
 #define SEG_C 12
