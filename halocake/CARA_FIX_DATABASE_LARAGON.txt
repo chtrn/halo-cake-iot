@@ -1,0 +1,56 @@
+HaloCake - PERBAIKAN DATABASE LARAGON (10 November 2026)
+======================================================
+
+MASALAH: health.php sebelumnya OK, tetapi dashboard.php dan history.php gagal.
+PENYEBAB YANG MUNGKIN: health.php lama hanya menguji tabel crossing_states.
+Endpoint lainnya juga membutuhkan tabel crossings, train_passages, activities dan kolomnya.
+
+1. BACKUP database halocake_monitoring lewat HeidiSQL (Export database as SQL)
+   sebelum menjalankan perubahan skema.
+
+2. Salin folder halocake dari ZIP patch ini ke:
+   C:\laragon\www\halocake\
+   dan izinkan menimpa hanya api/health.php; file lainnya baru.
+   Patch TIDAK menimpa config/app.php, data DB, frontend, atau ingest.php.
+
+3. Buka:
+   http://localhost/halocake/api/db-diagnose.php
+   Lihat missing_tables, missing_columns, dan query_tests.
+   Ini endpoint DIAGNOSTIK LOKAL; hapus setelah semuanya beres.
+
+4. Jika 'missing_tables' tidak kosong dan tidak ada tabel lama yang harus
+dipertahankan dengan struktur berbeda:
+   - Laragon > Database (HeidiSQL)
+   - Load SQL File: C:\laragon\www\halocake\database\repair-tabel.sql
+   - Jalankan F9.
+   Script ini hanya CREATE DATABASE / CREATE TABLE IF NOT EXISTS dan
+   INSERT ON DUPLICATE KEY UPDATE yang tidak mereset baris lama.
+
+5. Jika 'missing_columns' tidak kosong, jalankan migrasi tambahan non-destruktif.
+   Di Terminal Laragon:
+      cd C:\laragon\www\halocake
+      php tools\repair-schema.php
+   Perintah di atas hanya PREVIEW, belum mengubah database.
+   Setelah backup dan memeriksa rencana perubahan:
+      php tools\repair-schema.php --apply
+
+   Jika terminal tidak mengenal 'php', buka Terminal melalui Laragon atau
+   jalankan executable php.exe dari folder bin\php instalasi Laragon.
+
+   Penting: script hanya menambah tabel/kolom yang hilang, TIDAK menghapus.
+   Script berhenti bila kolom kunci/id yang diperlukan tidak ada, karena itu
+   butuh migrasi khusus berdasarkan skema tabel lama.
+
+6. Tes ulang urut:
+   http://localhost/halocake/api/db-diagnose.php
+   http://localhost/halocake/api/health.php
+   http://localhost/halocake/api/dashboard.php
+   http://localhost/halocake/api/history.php
+   http://localhost/halocake/
+
+7. Bila kedua API masih gagal, kirim isi JSON 'query_tests' dari
+   db-diagnose.php. Pesan SQL lengkap hanya boleh dibagikan setelah
+   memastikan tidak memuat rahasia/kata sandi.
+
+8. HAPUS file api/db-diagnose.php setelah debugging. Jangan akses dari
+   server publik. Jangan DROP DATABASE / TRUNCATE karena itu menghapus data.

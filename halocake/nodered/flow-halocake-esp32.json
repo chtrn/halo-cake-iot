@@ -1,0 +1,158 @@
+[
+  {
+    "id": "tab_halocake",
+    "type": "tab",
+    "label": "HaloCake ESP32 → Laragon MySQL",
+    "disabled": false,
+    "info": "Telemetry ESP32 / MQTT (public HiveMQ) to PHP ingestion API on Laragon."
+  },
+  {
+    "id": "mqtt_halocake",
+    "type": "mqtt in",
+    "z": "tab_halocake",
+    "name": "MQTT ESP32 / palang",
+    "topic": "halocake/demo-7d82/esp32-01/status",
+    "qos": "0",
+    "datatype": "auto-detect",
+    "broker": "mqtt_broker_halocake",
+    "nl": false,
+    "rap": true,
+    "rh": 0,
+    "inputs": 0,
+    "x": 160,
+    "y": 160,
+    "wires": [
+      [
+        "convert_halocake",
+        "mqtt_debug_halocake"
+      ]
+    ]
+  },
+  {
+    "id": "convert_halocake",
+    "type": "function",
+    "z": "tab_halocake",
+    "name": "JSON ke API Laragon",
+    "func": "// Sesuaikan dengan config/app.php > ingest_key di Laragon.\n// UBAH sebelum digunakan di jaringan apa pun yang tidak tepercaya.\nconst API_KEY = \"ISI_INGEST_KEY_DARI_CONFIG_APP_PHP\";\n// Node-RED dan Laragon berjalan pada laptop yang sama:\nconst API_URL = \"http://127.0.0.1/halocake/api/ingest.php\";\n\nlet payload = msg.payload;\nif (Buffer.isBuffer(payload)) payload = payload.toString(\"utf8\");\nif (typeof payload === \"string\") {\n    try { payload = JSON.parse(payload); }\n    catch (e) { node.warn(\"Bukan JSON: \" + e.message); return null; }\n}\nif (!payload || typeof payload !== \"object\" || Array.isArray(payload)) {\n    node.warn(\"Payload MQTT harus objek JSON\"); return null;\n}\nif (payload.statusSistem === undefined || payload.statusPalang === undefined ||\n    payload.sensor1 === undefined || payload.sensor2 === undefined ||\n    payload.jumlahGerbong === undefined) {\n    node.warn(\"Field wajib tidak lengkap: \" + JSON.stringify(payload)); return null;\n}\n// Batas field JSON yang dikirim ke backend; countdown bukan field database.\nconst output = {\n    statusSistem: payload.statusSistem,\n    statusPalang: payload.statusPalang,\n    sensor1: payload.sensor1,\n    sensor2: payload.sensor2,\n    jumlahGerbong: payload.jumlahGerbong\n};\nmsg.url = API_URL;\nmsg.method = \"POST\";\nmsg.headers = {\"Content-Type\":\"application/json\", \"X-API-Key\":API_KEY};\nmsg.payload = JSON.stringify(output);\nreturn msg;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 420,
+    "y": 160,
+    "wires": [
+      [
+        "post_halocake"
+      ]
+    ]
+  },
+  {
+    "id": "post_halocake",
+    "type": "http request",
+    "z": "tab_halocake",
+    "name": "POST ke api/ingest.php (Laragon)",
+    "method": "use",
+    "ret": "obj",
+    "paytoqs": "ignore",
+    "url": "",
+    "tls": "",
+    "persist": false,
+    "proxy": "",
+    "insecureHTTPParser": false,
+    "authType": "",
+    "senderr": false,
+    "headers": [],
+    "x": 700,
+    "y": 160,
+    "wires": [
+      [
+        "debug_halocake"
+      ]
+    ]
+  },
+  {
+    "id": "debug_halocake",
+    "type": "debug",
+    "z": "tab_halocake",
+    "name": "Respons MySQL / PHP",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 910,
+    "y": 160,
+    "wires": []
+  },
+  {
+    "id": "mqtt_broker_halocake",
+    "type": "mqtt-broker",
+    "name": "HiveMQ public TEST (1883)",
+    "broker": "broker.hivemq.com",
+    "port": "1883",
+    "clientid": "",
+    "autoConnect": true,
+    "usetls": false,
+    "protocolVersion": "4",
+    "keepalive": "60",
+    "cleansession": true,
+    "autoUnsubscribe": true,
+    "birthTopic": "",
+    "birthQos": "0",
+    "birthPayload": "",
+    "birthMsg": {},
+    "closeTopic": "",
+    "closeQos": "0",
+    "closePayload": "",
+    "closeMsg": {},
+    "willTopic": "",
+    "willQos": "0",
+    "willPayload": "",
+    "willMsg": {}
+  },
+  {
+    "id": "mqtt_debug_halocake",
+    "type": "debug",
+    "z": "tab_halocake",
+    "name": "Pesan MQTT dari ESP32",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "x": 440,
+    "y": 220,
+    "wires": []
+  },
+  {
+    "id": "inject_halocake_tes",
+    "type": "inject",
+    "z": "tab_halocake",
+    "name": "TES saat palang idle (manual)",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "{\"statusSistem\":\"Idle\",\"statusPalang\":\"Terbuka\",\"sensor1\":false,\"sensor2\":false,\"jumlahGerbong\":0}",
+    "payloadType": "json",
+    "x": 190,
+    "y": 300,
+    "wires": [
+      [
+        "convert_halocake"
+      ]
+    ]
+  }
+]

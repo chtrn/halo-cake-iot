@@ -1,0 +1,13 @@
+HALOCAKE - CEK ERROR PHP DITAMPILKAN MENTAH
+
+1. Simpan project tepat di C:\laragon\www\halocake\index.html
+2. Laragon > Start All (aktifkan Apache dan MySQL).
+3. JANGAN buka file via Live Server VS Code / file:// / port 5500.
+4. Buka http://localhost/halocake/api/php-check.php
+   Harus keluar JSON: {"ok":true,"php":"running"}
+5. Jika muncul <?php, alamat itu tidak menjalankan PHP. Periksa Apache/konfigurasi PHP di Laragon.
+6. Jika tes php berhasil, buka http://localhost/halocake/api/health.php
+   Harus keluar ok:true. Jika tidak, impor database/schema.sql via HeidiSQL dan cek config/app.php
+7. Buka http://localhost/halocake/
+
+PENTING: Bila file PHP mentah bisa diakses, jangan jalankan aplikasi di jaringan publik hingga handler PHP benar.
