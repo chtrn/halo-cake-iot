@@ -1,29 +1,8 @@
-/*
-  HaloCake + 7-segment 2 digit custom + buzzer tersinkron countdown.
-  CATATAN: display diasumsikan COMMON CATHODE dengan resistor per segmen.
-  Pemetaan segmen kiri hanya untuk digit "1"; cek foto wiring fisik.
-  Perbaikan: sensor direarm setelah kedua sensor kosong stabil 0,5 detik.
-  Countdown hanya dimulai oleh pembacaan aktif stabil 50 ms.
-  Prototipe edukasi, BUKAN kontrol perlintasan nyata.
-*/
-/*
-  HaloCake - ESP32 Palang Kereta (prototipe edukasi)
-  ESP32 -> Wi-Fi -> MQTT -> Node-RED -> PHP Laragon -> MySQL -> dashboard.
-
-  Library Arduino IDE:
-  - ESP32Servo
-  - PubSubClient by Nick O'Leary
-  (WiFi.h sudah termasuk ESP32 board package)
-
-  UBAH WIFI_SSID dan WIFI_PASSWORD, lalu samakan MQTT_TOPIC
-  dengan MQTT-in di Node-RED.
-*/
 #include <Arduino.h>
 #include <WiFi.h>
 #include <PubSubClient.h>
 #include <ESP32Servo.h>
 
-// ========== KONFIGURASI JARINGAN ==========
 const char* WIFI_SSID     = "cihuy";
 const char* WIFI_PASSWORD = "123456789";
 const char* MQTT_HOST     = "broker.hivemq.com";
@@ -34,7 +13,6 @@ const unsigned long WIFI_RETRY_MS = 10000;
 const unsigned long MQTT_RETRY_MS = 8000;
 const unsigned long HEARTBEAT_MS  = 10000;
 
-// ========== PIN ESP32 (TETAP SESUAI PROYEK) ==========
 #define SENSOR_A    22
 #define SENSOR_B    4
 #define SERVO_PIN   25
