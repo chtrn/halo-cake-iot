@@ -2,12 +2,6 @@
 
 **Nama Kelompok: HaloCake**
 
-## Deskripsi Proyek
-
-**Smar Railway Level-Crossing Countdown Barrier** merupakan proyek prototipe berbasis **Internet of Things (IoT)** yang dirancang untuk mendemonstrasikan sistem peringatan dan palang otomatis pada perlintasan kereta api. Sistem menggunakan dua sensor inframerah (IR) untuk mendeteksi keberadaan atau pergerakan kereta. Ketika kereta terdeteksi, sistem menjalankan mekanisme countdown sebagai bagian dari proses peringatan sebelum palang menutup. Setelah kereta melintas dan kondisi sensor menunjukkan jalur telah aman, palang dapat dibuka kembali.
-
-Sistem menggunakan ESP32 sebagai pengendali perangkat dan mengirimkan informasi kondisi perlintasan melalui MQTT. Data tersebut diterima dan diteruskan oleh Node-RED ke backend berbasis PHP, kemudian disimpan pada MySQL/MariaDB. Dashboard web menampilkan status sistem, kondisi palang, status kedua sensor, jumlah gerbong, statistik perjalanan, grafik pemantauan harian, serta riwayat aktivitas. Dengan demikian, proyek ini menggabungkan demonstrasi mekanisme perlintasan otomatis dengan pemantauan data berbasis web.
-
 ## Anggota Kelompok
 
 | Nama | NIM | Kelas |
@@ -16,6 +10,12 @@ Sistem menggunakan ESP32 sebagai pengendali perangkat dan mengirimkan informasi 
 | Aulya Revalina | 123240141 | IF-C |
 | Azzah Fauziya Kamila | 123240168 | IF-A |
 | Chatarina Giftadiyana | 123240183 | IF-B |
+
+## Deskripsi Proyek
+
+**Smar Railway Level-Crossing Countdown Barrier** merupakan proyek prototipe berbasis **Internet of Things (IoT)** yang dirancang untuk mendemonstrasikan sistem peringatan dan palang otomatis pada perlintasan kereta api. Sistem menggunakan dua sensor inframerah (IR) untuk mendeteksi keberadaan atau pergerakan kereta. Ketika kereta terdeteksi, sistem menjalankan mekanisme countdown sebagai bagian dari proses peringatan sebelum palang menutup. Setelah kereta melintas dan kondisi sensor menunjukkan jalur telah aman, palang dapat dibuka kembali.
+
+Sistem menggunakan ESP32 sebagai pengendali perangkat dan mengirimkan informasi kondisi perlintasan melalui MQTT. Data tersebut diterima dan diteruskan oleh Node-RED ke backend berbasis PHP, kemudian disimpan pada MySQL/MariaDB. Dashboard web menampilkan status sistem, kondisi palang, status kedua sensor, jumlah gerbong, statistik perjalanan, grafik pemantauan harian, serta riwayat aktivitas. Dengan demikian, proyek ini menggabungkan demonstrasi mekanisme perlintasan otomatis dengan pemantauan data berbasis web.
 
 ## Fitur Utama
 
