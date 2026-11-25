@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS activities (
 ) ENGINE=InnoDB;
 
 INSERT INTO crossings (id, name, location)
-VALUES (1, 'Perlintasan 01', 'Bandung')
+VALUES (1, 'Perlintasan 01', 'Yogyakarta')
 ON DUPLICATE KEY UPDATE id = id;
 INSERT INTO crossing_states (crossing_id)
 VALUES (1)
